@@ -1,0 +1,252 @@
+$b: #000;
+$w: #fff;
+$t: rgb(10, 5, 5);
+$primary: #0088ff;
+$secondary: #ee2c4a;
+
+@mixin flex($dr, $jc, $ai) {
+    display: flex;
+    flex-direction: $dr;
+    justify-content: $jc;
+    align-items: $ai;
+}
+
+@mixin font($s, $w) {
+    font-size: $s;
+    font-weight: $w;
+}
+
+// Tablet And Mobile
+@media (max-width: 1023px) {
+    .hide-on-tablet-mobile {
+        display: none !important;
+    }
+
+
+
+
+
+    .sidebar {
+        position: fixed;
+        width: 250px;
+        opacity: 0;
+        transform: translateX(-100%);
+        transition: all ease-in 0.5s;
+        z-index: 5;
+
+        &-icon {
+            @include font(3.4rem, 450);
+            margin: 12px;
+            text-align: end;
+        }
+
+        &__account {
+            margin-top: 0;
+        }
+    }
+
+    .header {
+        left: 0;
+        justify-content: space-between;
+        padding: 0 12px;
+
+        &__sidebar-ion {
+            @include font(3.4rem, 450);
+            z-index: 1;
+        }
+
+        &__setting-and-notification {
+            justify-content: space-between;
+        }
+
+        &__notification {
+            margin-right: 0;
+            flex: 0.4;
+            text-align: end;
+        }
+
+        &__setting {
+            margin-right: 0;
+            flex: 1;
+
+            &-update {
+                flex: 0.7;
+                margin: 0;
+                margin-left: 12px;
+            }
+        }
+    }
+
+    .container {
+        height: 100%;
+        padding-left: 0 !important;
+
+        &__left {
+            margin-top: 24px;
+            height: 500px;
+            order: 2;
+
+            &-heading {
+                @include font(3rem, 700);
+                margin-bottom: 12px;
+            }
+
+            &-quantity-song {
+                @include font(2.2rem, 700);
+                color: rgb(43, 40, 40);
+            }
+
+            &-list-song {
+                margin-top: 12px;
+                height: 100%;
+            }
+
+            &-item {}
+        }
+
+        &__music {
+            flex-direction: column;
+            margin-top: 0;
+        }
+
+        &__player {
+            margin-top: 36px;
+
+        }
+
+        &__left {
+            order: 1;
+        }
+
+        &__albums {
+            order: 3;
+            margin-top: 12px !important;
+        }
+    }
+
+
+
+}
+
+// Tablet
+@media (min-width: 768px) and (max-width: 1023px) {
+    .hide-on-tablet {
+        display: none !important;
+    }
+
+}
+
+// Mobile
+@media (max-width: 767px) {
+    .hide-on-mobile {
+        display: none !important;
+    }
+
+    .sidebar {
+        width: 214px;
+    }
+
+    .header {
+
+        &__sidebar-ion {
+            @include font(3rem, 450);
+
+        }
+
+        &__search>input {
+            width: 92%;
+        }
+    }
+
+    .container {
+        padding: 0 !important;
+
+        &__music {
+            justify-content: center;
+        }
+
+        &__left {
+            &-item {
+                &-desc {
+                    flex-wrap: wrap;
+                    @include flex(column, space-between, start);
+                    width: 178px;
+                }
+
+                &-index {
+                    margin: 0 8px;
+                }
+
+                &-name {
+                    width: 80%;
+                    @include font(1.4rem, 400)
+                }
+            }
+
+            &-list-song {
+                height: 380px;
+            }
+        }
+
+        &__right {
+            @include flex(row, center, center);
+            // margin: 0 16px;
+            padding: 0;
+        }
+
+        &__player {
+            width: 100%;
+            margin-right: 0;
+            margin-top: 12px;
+            height: 265px;
+
+            &-warp {
+                width: 90%;
+                left: 5%;
+                top: 9px;
+                height: 192px;
+            }
+
+            &-img {
+                width: 90px;
+                height: 90px;
+                margin: 12px;
+            }
+
+            &-name {
+                font-size: 1.4rem;
+            }
+
+            &-artists {
+                font-size: 1.2rem;
+                margin: 8px 0;
+            }
+
+            &-action {
+                width: 90%;
+                left: 5%;
+                padding: 4px 0;
+                bottom: 10px;
+            }
+        }
+
+        &__left-list-song {
+            height: 260px;
+        }
+
+    }
+
+
+
+
+}
+
+// PC
+@media (min-width: 1024px) {
+    .hide-on-pc {
+        display: none !important;
+    }
+
+
+
+}
