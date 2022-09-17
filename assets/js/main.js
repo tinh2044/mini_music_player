@@ -3,10 +3,10 @@ const $ = document.querySelector.bind(document)
 const $$ = document.querySelectorAll.bind(document)
 var  dataOfAccount = {
     idSong: 0,
-    recentlySong:[],
-    listLikes:[]
+    recentlySong: localStorage.getItem('MINI_MUSIC_PLAYER').recentlySong || [],
+    listLikes: JSON.parse(localStorage.getItem('MINI_MUSIC_PLAYER')).listLikes || [],
+    action: JSON.parse(localStorage.getItem('MINI_MUSIC_PLAYER')).action || {}
 }
-dataOfAccount.listLikes = JSON.parse(localStorage.getItem('MINI_MUSIC_PLAYER')).listLikes
 // Handle Render Albums
 function renderAlbums() {
     var htmls =  listAlbums.map( (album,index) => {
@@ -28,7 +28,7 @@ function renderAlbums() {
 
 
 // Handle Render List Songs 
-function renderSongs(option, listSongAlbum, check) {
+function renderSongs(option, listSongAlbum) {
     var listSongs
     if (option != 'all') {
     listSongs = listSongAlbum
@@ -58,10 +58,10 @@ function renderSongs(option, listSongAlbum, check) {
     $('.container__left-list-song').innerHTML = htmls.join('')
     $('.container__left-quantity-song').textContent= `${listSongs.length > 1 && listSongs.length + ' songs' || listSongs.length + ' song'}`   
 
-    handlePlayMusic(option,listSongs, check)  
+    handlePlayMusic(option,listSongs)  
 
 }
-function handlePlayMusic(option,listSongs, check) {
+function handlePlayMusic(option,listSongs) {
     const audio = $('#audio')
     const progressBar = $('.container__player-progress-bar')
     const playPauseIcon =  $('.container__player-action-play')
@@ -72,10 +72,10 @@ function handlePlayMusic(option,listSongs, check) {
     const cd = $('.container__player-img')
     const listItemSongs = Array.from($$('.container__left-item'))
     var currentIndex = 0
-    var isPlay = false
-    var isRepeat = false
-    var isRepeat_1 = false
-    var isRandom = false
+    var isPlay = false 
+    var isRepeat =  dataOfAccount.action.isRepeat || false
+    var isRepeat_1 =  dataOfAccount.action.isRepeat_1 || false
+    var isRandom = dataOfAccount.action.isRandom || false
     var currentVol = audio.volume
 
     function loadCurrentSong() {
@@ -99,10 +99,6 @@ function handlePlayMusic(option,listSongs, check) {
         }
         ChangePlayingSong()
         
-    }
-    // Handle Check Has Repeat Random Or Not
-    if (check.length > 0) {
-        [isRepeat, isRepeat_1, isRandom ]= check
     }
     var cdAnimate = cd.animate([
         {
@@ -153,7 +149,6 @@ function handlePlayMusic(option,listSongs, check) {
             HandlePlayPause()
         }
         nextBtn.onclick = () => {
-            
             if (isRandom) {
                 handleRandom()
             } else {
@@ -171,7 +166,8 @@ function handlePlayMusic(option,listSongs, check) {
             audio.play()
         }
         repeatOrRandom.onclick = () => {
-            checkRepeatOrRandom()
+        var type = parseInt(repeatOrRandom.getAttribute('type')) 
+            checkRepeatOrRandom(type)
         }
         progressBar.oninput = () => { 
             handleProgressBar()
@@ -182,8 +178,7 @@ function handlePlayMusic(option,listSongs, check) {
         }
 
     }
-    function checkRepeatOrRandom() { 
-        var type = parseInt(repeatOrRandom.getAttribute('type')) 
+    function checkRepeatOrRandom(type) { 
             switch (type) {
                 case 0:
                     repeatOrRandom.innerHTML = `<i class="active container__player-action-repeat bi bi-repeat"></i>`
@@ -210,6 +205,14 @@ function handlePlayMusic(option,listSongs, check) {
                     isRepeat_1 = false
                     break
             }
+            var action= {
+                isRepeat: isRepeat,
+                isRepeat_1: isRepeat_1,
+                isRandom: isRandom
+            }
+            dataOfAccount.action = action
+            var jsonItem = JSON.stringify(dataOfAccount)
+            localStorage.setItem('MINI_MUSIC_PLAYER', jsonItem)
             if ( type === 3) {
                 type = 0
             } else {
@@ -255,6 +258,9 @@ function handlePlayMusic(option,listSongs, check) {
         ChangePlayingSong()
         loadCurrentSong()
         audio.play()
+    }
+    function saveRecentlySongs() {
+        
     }
     // Handle When Click Play Pause
     function HandlePlayPause() {
@@ -361,26 +367,22 @@ function handlePlayMusic(option,listSongs, check) {
                 var index = this.dataset.index
                 $('.container__left-heading').textContent = listAlbums[index].name
                 cdAnimate.pause()
-                    renderSongs(type,listSongs, [isRepeat, isRepeat_1, isRandom])
+                    renderSongs(type,listSongs)
                 
                 
             }
         })
     }
-    if (option === '') {
-        var id = JSON.parse(localStorage.getItem('MINI_MUSIC_PLAYER')).idSong || 0
-        currentIndex = id
-    }
+    
     function handleLike() {
         const likeBtns = Array.from($$('.container__left-item-like'))
-        var listLikes = dataOfAccount.listLikes
-        if (listLikes) {
+            var listLikes = dataOfAccount.listLikes
             listSongs.forEach(function (song) {
                 if(listLikes.includes(song.id)) {
                     $(`div[id="${song.id}"]`).classList.add('liked')
                 }
             })
-        } 
+        
     
         likeBtns.forEach( function (likeBtn,index) {
             likeBtn.onclick = function (e) {
@@ -398,17 +400,30 @@ function handlePlayMusic(option,listSongs, check) {
                 dataOfAccount.listLikes= listLikes
                var jsonItem = JSON.stringify(dataOfAccount)
                localStorage.setItem('MINI_MUSIC_PLAYER', jsonItem)
-                console.log(listLikes)
             }
         })
+    }
     
-        
-    
+    if (option === '') {
+        var id = JSON.parse(localStorage.getItem('MINI_MUSIC_PLAYER')).idSong || 0
+        currentIndex = id -1
+    }
+    if (isRepeat) {
+        checkRepeatOrRandom(0)
+    } else {
+        if (isRepeat_1) {
+        checkRepeatOrRandom(1)
+
+        } else {
+            if (isRandom) {
+                checkRepeatOrRandom(2)
+            }
+        }
     }
     clickAlbumItem()
     loadCurrentSong()
     handleEvents()
-    ClickItemSong()
+    ClickItemSong() 
     handleLike() 
     if (option) {
         currentIndex = 0
