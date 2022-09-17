@@ -1,6 +1,12 @@
 import { listAlbums, listMusics } from './data.js'
 const $ = document.querySelector.bind(document)
 const $$ = document.querySelectorAll.bind(document)
+var  dataOfAccount = {
+    idSong: 0,
+    recentlySong:[],
+    listLikes:[]
+}
+dataOfAccount.listLikes = JSON.parse(localStorage.getItem('MINI_MUSIC_PLAYER')).listLikes
 // Handle Render Albums
 function renderAlbums() {
     var htmls =  listAlbums.map( (album,index) => {
@@ -20,7 +26,7 @@ function renderAlbums() {
 }
 
 
-renderAlbums()
+
 // Handle Render List Songs 
 function renderSongs(option, listSongAlbum, check) {
     var listSongs
@@ -34,7 +40,7 @@ function renderSongs(option, listSongAlbum, check) {
     `
     <li data-index="${index}" data-type="${song.type}" class="container__left-item ${index === 0 ? 'playing' : ''}">
         <img src="${song.image}" alt="" class="container__left-item-img">
-        <p class="container__left-item-index">${index +1}</p>
+        <p class="container__left-item-index">${index + 1}</p>
         <div class="container__left-item-desc">
         <p class="container__left-item-name">${song.name}</p>
         <p class="container__left-item-artist">
@@ -42,8 +48,9 @@ function renderSongs(option, listSongAlbum, check) {
                 ${song.singer}
             </p>
         </div>
-        <div class="container__left-item-like">
-          <i class="bi bi-heart" style="color:#000"></i>
+        <div id="${song.id}" class=" container__left-item-like">
+          <i class="bi bi-heart" style="color:#000;display:block"></i>
+          <i class="bi bi-heart-fill" style="color:red;display:none;"></i>
         </div>
     </li>
 
@@ -51,11 +58,9 @@ function renderSongs(option, listSongAlbum, check) {
     $('.container__left-list-song').innerHTML = htmls.join('')
     $('.container__left-quantity-song').textContent= `${listSongs.length > 1 && listSongs.length + ' songs' || listSongs.length + ' song'}`   
 
-    handleLike()
     handlePlayMusic(option,listSongs, check)  
 
 }
-renderSongs('',listMusics, [])
 function handlePlayMusic(option,listSongs, check) {
     const audio = $('#audio')
     const progressBar = $('.container__player-progress-bar')
@@ -72,8 +77,12 @@ function handlePlayMusic(option,listSongs, check) {
     var isRepeat_1 = false
     var isRandom = false
     var currentVol = audio.volume
+
     function loadCurrentSong() {
         var song = listSongs[currentIndex]
+        dataOfAccount.idSong = listSongs[currentIndex].id
+        var jsonItem = JSON.stringify(dataOfAccount)
+        localStorage.setItem("MINI_MUSIC_PLAYER", jsonItem)
         cd.src = `${song.image}`
         $('.container__player-name').textContent = `${song.name}`
         audio.src = `./assets/list-music/${song.path}`
@@ -86,12 +95,14 @@ function handlePlayMusic(option,listSongs, check) {
             }
             var timeMin = parseInt(audio.duration / 60)
             durationTime.textContent = `${timeMin}:${timeSec} ` 
+
         }
         ChangePlayingSong()
+        
+    }
     // Handle Check Has Repeat Random Or Not
     if (check.length > 0) {
         [isRepeat, isRepeat_1, isRandom ]= check
-    }
     }
     var cdAnimate = cd.animate([
         {
@@ -142,6 +153,7 @@ function handlePlayMusic(option,listSongs, check) {
             HandlePlayPause()
         }
         nextBtn.onclick = () => {
+            
             if (isRandom) {
                 handleRandom()
             } else {
@@ -150,6 +162,7 @@ function handlePlayMusic(option,listSongs, check) {
             audio.play()
         }
         prevBtn.onclick = () => {
+            
             if (isRandom) {
                 handleRandom()
             } else {
@@ -354,44 +367,58 @@ function handlePlayMusic(option,listSongs, check) {
             }
         })
     }
-    clickAlbumItem()
+    if (option === '') {
+        var id = JSON.parse(localStorage.getItem('MINI_MUSIC_PLAYER')).idSong || 0
+        currentIndex = id
+    }
+    function handleLike() {
+        const likeBtns = Array.from($$('.container__left-item-like'))
+        var listLikes = dataOfAccount.listLikes
+        if (listLikes) {
+            listSongs.forEach(function (song) {
+                if(listLikes.includes(song.id)) {
+                    $(`div[id="${song.id}"]`).classList.add('liked')
+                }
+            })
+        } 
     
+        likeBtns.forEach( function (likeBtn,index) {
+            likeBtn.onclick = function (e) {
+                e.stopPropagation();
+                var classLiked = this.classList.contains('liked')
+                var id  = parseInt(this.id)
+                if(classLiked) {
+                    this.classList.remove('liked');
+                    index = listLikes.indexOf(id);
+                    listLikes.splice(index, 1)
+                } else {
+                    this.classList.add('liked');
+                    listLikes.push(id)
+                }
+                dataOfAccount.listLikes= listLikes
+               var jsonItem = JSON.stringify(dataOfAccount)
+               localStorage.setItem('MINI_MUSIC_PLAYER', jsonItem)
+                console.log(listLikes)
+            }
+        })
+    
+        
+    
+    }
+    clickAlbumItem()
     loadCurrentSong()
     handleEvents()
     ClickItemSong()
+    handleLike() 
     if (option) {
+        currentIndex = 0
         isPlay = false
         HandlePlayPause()
         option = ''
     }
-
-
 }
 
-function handleLike() {
-    var isLike = []
-    const likeBtns = $$('.container__left-item-like')
-    for (var i = 0; i < likeBtns.length; i++) { 
-        isLike[i] = false
-    }
-    Array.from(likeBtns).forEach( function (likeBtn,index) {
-        likeBtn.onclick = function (e) {
-            e.stopPropagation();
-            if (isLike[index]) {
-                isLike[index] = false
-                likeBtn.innerHTML = '<i class="bi bi-heart" style="color:#000"></i>'
-        
-            } else {
-                isLike[index] = true
-                likeBtn.innerHTML = '<i class="bi bi-heart-fill" style="color:red"></i>'
-            }
 
-        }
-    })
-
-    
-
-}
 
 
 
@@ -406,7 +433,7 @@ function handleLike() {
             }
         } )
     }
-    clickNavbarItem()
+    
     // Handle Vol Bar
     function volBar() {
         var volIcon =$('.container__player-action-change-vol')
@@ -415,7 +442,7 @@ function handleLike() {
             volBar.classList.toggle('d-block')
         }
     }
-    volBar()
+    
     // Handle Icon SideBar On Tablet And Mobile 
     function handleSidebar() {
         var openIcon = $('.header__sidebar-ion')
@@ -440,7 +467,7 @@ function handleLike() {
             overlay.style.opacity = 0
         }
     }
-    handleSidebar()
+    
     // Handle Albums
     function slideAlbums() {
         const albumsWarp = $('.container__albums-list')
@@ -458,3 +485,13 @@ function handleLike() {
 
         }
     }
+ 
+function start() {
+    renderAlbums()
+    renderSongs('',listMusics, [])
+    clickNavbarItem()
+    volBar()
+    handleSidebar()
+
+}
+start()

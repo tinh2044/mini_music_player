@@ -278,7 +278,7 @@ const listMusics = [
     path: "Legends Never Die.mp3",
     image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYCa7ZZuEoI2q6wUM2IOwUuK4yEEPuUjWy9A&usqp=CAU',
     type: 'strong',
-    id:28
+    id:29
   },
   {
     name: 'Leyla',
@@ -286,7 +286,7 @@ const listMusics = [
     path: "Leyla.mp3",
     image: 'https://home.voca.vn/assets/img/upload/images/Leyla.jpg',
     type: 'chill',
-    id:29
+    id:30
   },
   {
     name: 'Lily',
@@ -294,7 +294,7 @@ const listMusics = [
     path: "Lily.mp3",
     image: 'https://i.ytimg.com/vi/lvsvj00vGvo/maxresdefault.jpg',
     type: 'alanWalker',
-    id:30
+    id:31
   },
   {
     name: 'Lost Control',
@@ -302,7 +302,7 @@ const listMusics = [
     path: "Lost Control.mp3",
     image: 'https://i1.sndcdn.com/artworks-000506344518-77kb8s-t500x500.jpg',
     type: 'alanWalker',
-    id:31
+    id:32
   },
   {
     name: 'Love Story',
@@ -310,7 +310,7 @@ const listMusics = [
     path: "Love Story.mp3",
     image: 'https://lamhoangmedia.com/wp-content/uploads/2021/04/Love-Story.jpeg',
     type: 'love',
-    id:32
+    id:33
   },
   {
     name: 'Meant To Be  Arc North ',
@@ -318,7 +318,7 @@ const listMusics = [
     path: "Meant To Be  Arc North.mp3",
     image: 'https://avatar-ex-swe.nixcdn.com/song/2019/09/05/2/6/c/4/1567655910932_640.jpg',
     type: 'hot',
-    id:33
+    id:34
   },
   {
     name: 'Mine',
@@ -326,7 +326,7 @@ const listMusics = [
     path: "Mine.mp3",
     image: 'https://i.ytimg.com/vi/QeUFmGLhI_s/maxresdefault.jpg',
     type: 'edm',
-    id:34
+    id:35
   },
   {
     name: 'Monody',
@@ -334,7 +334,7 @@ const listMusics = [
     path: "Monody.mp3",
     image: 'https://i1.sndcdn.com/artworks-000195426897-73lfiz-t500x500.jpg',
     type: 'edm',
-    id:35
+    id:36
   },
   {
     name: 'Monsters',
@@ -342,7 +342,7 @@ const listMusics = [
     path: "Monsters.mp3",
     image: 'https://i.ytimg.com/vi/FmQutmPBfq0/maxresdefault.jpg',
     type: 'chill',
-    id:36
+    id:37
   },
   {
     name: 'Mood',
@@ -350,7 +350,7 @@ const listMusics = [
     path: "Mood.mp3",
     image: 'https://www.studytienganh.vn/upload/2021/04/97758.jpg',
     type: 'tiktok',
-    id:37
+    id:38
   },
   {
     name: 'On My Way',
@@ -358,7 +358,7 @@ const listMusics = [
     path: "On My Way.mp3",
     image: 'https://i1.sndcdn.com/artworks-000523641915-lo2qzf-t500x500.jpg',
     type: 'alanWalker',
-    id:38
+    id:39
   },
   {
     name: 'Once Upon A Time',
@@ -366,14 +366,6 @@ const listMusics = [
     path: "Once Upon A Time.mp3",
     image: 'https://i.ytimg.com/vi/4CuBR9VGDG8/maxresdefault.jpg',
     type: 'tiktok',
-    id:39
-  },
-  {
-    name: 'Oops',
-    singer: 'Lil Wayne & Yung Gravy',
-    path: "Oops.mp3",
-    image: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiVvNx3TSKoyavRm6U-4og-lBHFEDDcMLE1LG6EqBZ6taP0gSczjb5cEunX9U0Sx8pV16t2bF86OQRXDcK-CaJVDstaP5FcsYDrOgemqVnYAj0D40TkvmkwBKRJr4ulL6N26t71HWTQ-64YtttVmHSn_6TdM64OSX86W0Ivv6-kNs5PQMB9BAy3Y7CKbw/s1080/20220830_103943_0000.png',
-    type: 'love',
     id:40
   },
   {
