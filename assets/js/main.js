@@ -1,12 +1,16 @@
 import { listAlbums, listMusics } from './data.js'
 const $ = document.querySelector.bind(document)
 const $$ = document.querySelectorAll.bind(document)
-var  dataOfAccount = {
-    idSong: 0,
-    recentlySong: localStorage.getItem('MINI_MUSIC_PLAYER').recentlySong || [],
-    listLikes: JSON.parse(localStorage.getItem('MINI_MUSIC_PLAYER')).listLikes || [],
-    action: JSON.parse(localStorage.getItem('MINI_MUSIC_PLAYER')).action || {}
+var  dataOfAccount = JSON.parse(localStorage.getItem('MINI_MUSIC_PLAYER')) || {
+    idSong: 1,
+    listLikes: [],
+    action: {
+        isRepeat: false,
+        isRepeat_1: false,
+        isRandom: false
+    }
 }
+// localStorage.removeItem('MINI_MUSIC_PLAYER')
 // Handle Render Albums
 function renderAlbums() {
     var htmls =  listAlbums.map( (album,index) => {
@@ -80,9 +84,8 @@ function handlePlayMusic(option,listSongs) {
 
     function loadCurrentSong() {
         var song = listSongs[currentIndex]
-        dataOfAccount.idSong = listSongs[currentIndex].id
-        var jsonItem = JSON.stringify(dataOfAccount)
-        localStorage.setItem("MINI_MUSIC_PLAYER", jsonItem)
+        dataOfAccount.idSong  = song.id
+        localStorage.setItem("MINI_MUSIC_PLAYER", JSON.stringify(dataOfAccount))
         cd.src = `${song.image}`
         $('.container__player-name').textContent = `${song.name}`
         audio.src = `./assets/list-music/${song.path}`
@@ -205,14 +208,12 @@ function handlePlayMusic(option,listSongs) {
                     isRepeat_1 = false
                     break
             }
-            var action= {
+            dataOfAccount.action = {
                 isRepeat: isRepeat,
                 isRepeat_1: isRepeat_1,
                 isRandom: isRandom
             }
-            dataOfAccount.action = action
-            var jsonItem = JSON.stringify(dataOfAccount)
-            localStorage.setItem('MINI_MUSIC_PLAYER', jsonItem)
+            localStorage.setItem('MINI_MUSIC_PLAYER',JSON.stringify(dataOfAccount))
             if ( type === 3) {
                 type = 0
             } else {
@@ -258,9 +259,6 @@ function handlePlayMusic(option,listSongs) {
         ChangePlayingSong()
         loadCurrentSong()
         audio.play()
-    }
-    function saveRecentlySongs() {
-        
     }
     // Handle When Click Play Pause
     function HandlePlayPause() {
@@ -356,6 +354,7 @@ function handlePlayMusic(option,listSongs) {
     function clickAlbumItem() {
         var albumItem = Array.from($$('.container__albums-item'))
         albumItem.forEach( item => {
+
             item.onclick = function() {
                 var type = this.dataset.type
                 var listSongs
@@ -366,8 +365,10 @@ function handlePlayMusic(option,listSongs) {
                 } 
                 var index = this.dataset.index
                 $('.container__left-heading').textContent = listAlbums[index].name
+                dataOfAccount.albums = type 
+                localStorage.setItem('MINI_MUSIC_PLAYER', dataOfAccount)
                 cdAnimate.pause()
-                    renderSongs(type,listSongs)
+                renderSongs(type,listSongs)
                 
                 
             }
@@ -397,15 +398,14 @@ function handlePlayMusic(option,listSongs) {
                     this.classList.add('liked');
                     listLikes.push(id)
                 }
-                dataOfAccount.listLikes= listLikes
-               var jsonItem = JSON.stringify(dataOfAccount)
-               localStorage.setItem('MINI_MUSIC_PLAYER', jsonItem)
+                dataOfAccount.listLikes = listLikes
+               localStorage.setItem('MINI_MUSIC_PLAYER', JSON.stringify(dataOfAccount))
             }
         })
     }
     
     if (option === '') {
-        var id = JSON.parse(localStorage.getItem('MINI_MUSIC_PLAYER')).idSong || 0
+        var id = dataOfAccount.idSong
         currentIndex = id -1
     }
     if (isRepeat) {
@@ -425,12 +425,12 @@ function handlePlayMusic(option,listSongs) {
     handleEvents()
     ClickItemSong() 
     handleLike() 
-    if (option) {
+    if (option && option) {
         currentIndex = 0
         isPlay = false
         HandlePlayPause()
         option = ''
-    }
+    } 
 }
 
 
@@ -472,17 +472,20 @@ function handlePlayMusic(option,listSongs) {
         }
         closeIcon.onclick = function() {
             sidebar.classList.toggle('handle-sidebar')
-            overlay.style.display = 'none'
-            overlay.style.opacity = 0
+            overlay.style ={
+                display: 'none',
+                opacity: 0
+            }
 
         }
         overlay.onclick = function() {
             sidebar.classList.toggle('handle-sidebar')
-            overlay.style.display = 'none'
-            overlay.style.opacity = 0
+            overlay.style = {
+                display: 'none',
+                opacity: 0
+            }
         }
     }
-    
     // Handle Albums
     function slideAlbums() {
         const albumsWarp = $('.container__albums-list')
@@ -500,13 +503,35 @@ function handlePlayMusic(option,listSongs) {
 
         }
     }
- 
+    // Handle When Click Favorite song
+    function handleFavoriteSong() {
+        var listLikes = dataOfAccount.listLikes || []
+        $('#favorite').onclick = function() {
+            $('.container__left-heading').textContent = 'Favorite Songs'
+            if (listLikes.length > 0) {
+                var listFavorite = listMusics.filter(function(item) { 
+                    return listLikes.includes(item.id)
+                })
+                renderSongs('favorite', listFavorite)
+            } else {
+                renderSongs('favorite', [])
+            }
+            $('.sidebar').classList.remove('handle-sidebar')
+            $('.overlay').style = {
+                display: 'none',
+                opacity: 0
+            }
+            
+        }
+    }
 function start() {
+
     renderAlbums()
     renderSongs('',listMusics, [])
     clickNavbarItem()
     volBar()
     handleSidebar()
+    handleFavoriteSong()
 
 }
 start()

@@ -486,7 +486,7 @@ const listMusics = [
     path: "The Nights.mp3",
     image: 'https://i.ytimg.com/vi/2S0QhGGO1gQ/maxresdefault.jpg',
     type: 'strong',
-    id:56
+    id:55
   },
   {
     name: 'The Ocean',
@@ -494,7 +494,7 @@ const listMusics = [
     path: "The Ocean.mp3",
     image: 'https://i.ytimg.com/vi/mGQFZxIuURE/maxresdefault.jpg',
     type: 'tiktok',
-    id:57
+    id:56
   },
   {
     name: 'The Spectre',
@@ -502,7 +502,7 @@ const listMusics = [
     path: "The Spectre.mp3",
     image: 'https://upload.wikimedia.org/wikipedia/vi/c/c3/Alan_Walker_The_Spectre.jpg',
     type: 'alanWalker',
-    id:58
+    id:57
   },
   {
     name: 'The Way I Still Love You',
@@ -510,7 +510,7 @@ const listMusics = [
     path: "The Way I Still Love You.mp3",
     image: 'https://i.ytimg.com/vi/MJDSye06A0A/maxresdefault.jpg',
     type: 'love',
-    id:59
+    id:58
   },
   {
     name: 'This Is My Kingdom Come',
@@ -518,7 +518,7 @@ const listMusics = [
     path: "This Is My Kingdom Come.mp3",
     image: 'https://i.ytimg.com/vi/p1wIHF8dNQ8/maxresdefault.jpg',
     type: 'tiktok',
-    id:60
+    id:59
   },
   {
     name: 'Tired',
@@ -526,7 +526,7 @@ const listMusics = [
     path: "Tired.mp3",
     image: 'https://i.ytimg.com/vi/YnaEoCY_vzc/maxresdefault.jpg',
     type: 'alanWalker',
-    id:61
+    id:60
   },
   {
     name: 'Umbrella',
@@ -534,7 +534,7 @@ const listMusics = [
     path: "Umbrella.mp3",
     image: 'https://i.ytimg.com/vi/oVGRTQDqhs8/maxresdefault.jpg',
     type: 'tiktok',
-    id:62
+    id:61
   },
   {
     name: 'Unstoppable',
@@ -542,7 +542,7 @@ const listMusics = [
     path: "Unstoppable.mp3",
     image: 'https://i.ytimg.com/vi/h3h035Eyz5A/maxresdefault.jpg',
     type: 'edm',
-    id:63
+    id:62
   },
   {
     name: 'Until You',
@@ -550,7 +550,7 @@ const listMusics = [
     path: "Until You.mp3",
     image: 'https://i.ytimg.com/vi/3HbqAPore6w/maxresdefault.jpg',
     type: 'love',
-    id:64
+    id:63
   },
   {
     name: 'Waiting For Love',
@@ -558,7 +558,7 @@ const listMusics = [
     path: "Waiting For Love.mp3",
     image: 'https://upload.wikimedia.org/wikipedia/vi/8/81/Avicii%27s_Waiting_For_Love%2C_Cover_Artwork.png',
     type: 'love',
-    id:65
+    id:64
   },
   {
     name: 'Walk Thru Fire',
@@ -566,7 +566,7 @@ const listMusics = [
     path: "Walk Thru Fire.mp3",
     image: 'https://avatar-ex-swe.nixcdn.com/song/2018/08/06/f/5/6/1/1533518669570_640.jpg',
     type: 'tiktok',
-    id:66
+    id:65
   },
   {
     name: 'Warriors',
@@ -574,7 +574,7 @@ const listMusics = [
     path: "Warriors.mp3",
     image: 'https://i.ytimg.com/vi/vzPl2nhgbEs/maxresdefault.jpg',
     type: 'edm',
-    id:67
+    id:66
   },
   {
     name: 'Way Back Home',
@@ -582,7 +582,7 @@ const listMusics = [
     path: "Way Back Home.mp3",
     image: 'https://i.ytimg.com/vi/eNt78mQJavY/maxresdefault.jpg',
     type: 'tiktok',
-    id:68
+    id:67
   },
   {
     name: 'Wellerman',
@@ -590,7 +590,7 @@ const listMusics = [
     path: "Wellerman.mp3",
     image: 'https://pic-bstarstatic.akamaized.net/ugc/ace031e58de22d87bfb7576724f11ca841759a48.jpg',
     type: 'strong',
-    id:69
+    id:68
   },
   {
     name: 'My Love',
@@ -598,7 +598,7 @@ const listMusics = [
     path: "My Love.mp3",
     image: 'https://i.ytimg.com/vi/6WufhhwpxZ0/maxresdefault.jpg',
     type: 'love',
-    id:70
+    id:69
   },
   {
     name: 'Why Not Me',
@@ -606,7 +606,7 @@ const listMusics = [
     path: "Why Not Me.mp3",
     image: 'https://i.ytimg.com/vi/SHwvIwRMgWI/hqdefault.jpg',
     type: 'tiktok',
-    id:71
+    id:70
   }
 ]
 export {
