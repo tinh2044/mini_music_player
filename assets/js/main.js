@@ -403,7 +403,29 @@ function handlePlayMusic(option,listSongs) {
             }
         })
     }
-    
+    // Handle When Click Favorite song
+    function handleFavoriteSong() {
+        var listLikes = dataOfAccount.listLikes || []
+        $('#favorite').onclick = function() {
+            $('.container__left-heading').textContent = 'Favorite Songs'
+            if (listLikes.length > 0) {
+                var listFavorite = listMusics.filter(function(item) { 
+                    return listLikes.includes(item.id)
+                })
+                cdAnimate.pause()
+                renderSongs('favorite', listFavorite)
+            } else {
+                cdAnimate.pause()
+                renderSongs('favorite', [])
+            }
+            $('.sidebar').classList.remove('handle-sidebar')
+            $('.overlay').style = {
+                display: 'none',
+                opacity: 0
+            }
+            
+        }
+    }
     if (option === '') {
         var id = dataOfAccount.idSong
         currentIndex = id -1
@@ -425,6 +447,7 @@ function handlePlayMusic(option,listSongs) {
     handleEvents()
     ClickItemSong() 
     handleLike() 
+    handleFavoriteSong()
     if (option && option) {
         currentIndex = 0
         isPlay = false
@@ -503,27 +526,7 @@ function handlePlayMusic(option,listSongs) {
 
         }
     }
-    // Handle When Click Favorite song
-    function handleFavoriteSong() {
-        var listLikes = dataOfAccount.listLikes || []
-        $('#favorite').onclick = function() {
-            $('.container__left-heading').textContent = 'Favorite Songs'
-            if (listLikes.length > 0) {
-                var listFavorite = listMusics.filter(function(item) { 
-                    return listLikes.includes(item.id)
-                })
-                renderSongs('favorite', listFavorite)
-            } else {
-                renderSongs('favorite', [])
-            }
-            $('.sidebar').classList.remove('handle-sidebar')
-            $('.overlay').style = {
-                display: 'none',
-                opacity: 0
-            }
-            
-        }
-    }
+    
 function start() {
 
     renderAlbums()
@@ -531,7 +534,6 @@ function start() {
     clickNavbarItem()
     volBar()
     handleSidebar()
-    handleFavoriteSong()
 
 }
 start()
