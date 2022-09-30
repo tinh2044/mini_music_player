@@ -513,21 +513,50 @@ html {
 
 .container__player-progress {
   width: 92%;
-  height: 6px;
+  height: 8px;
   background-color: transparent;
   border-radius: 4px;
   cursor: pointer;
+  position: relative;
 }
 
 .container__player-progress-bar {
   width: 100%;
-  height: 100%;
+  height: 4px;
   background-color: #0088ff;
   border-radius: 4px;
   position: relative;
   outline: none;
   border: none;
   cursor: pointer;
+  transition: height 0.05s ease-in;
+}
+
+.container__player-progress-bar:hover {
+  height: 6px;
+}
+
+.container__player-progress span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 18px;
+  background-color: #6585e3;
+  border-radius: 6px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  position: absolute;
+  top: -24px;
+  opacity: 0;
+}
+
+.container__player-progress span::after {
+  content: '';
+  position: absolute;
+  top: 75%;
+  border-width: 8px 12px;
+  border-style: solid;
+  border-color: #6585e3 transparent transparent transparent;
 }
 
 .container__player-progress-time {
